@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CatClap Theaters!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    header {
+      background-color: rgb(100, 0, 0);
+      padding: 10px;
+      text-align: left;
+      font-size: 20px;
+      color: white;
+    }
+
+    nav {
+      float: left;
+      width: 30%;
+      height: 1000px;
+      background: #ccc;
+      font-size: 20px;
+      padding: 20px;
+    }
+
+    article {
+      float: left;
+      padding: 20px;
+      width: 70%;
+      background-color: #f1f1f1;
+      height: 1000px;
+    }
+
+    footer {
+      background-color: rgb(97, 97, 97);
+      padding: 5px;
+      font-size: 20px;
+      text-align: center;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <p>
+      <a onclick="newMovie('cat.webp',
+            '<p>Our mascot: CatClap!</p>')" href="#"><img src="cat.webp" alt="catclap"
+          style="float:right;width:85px;height:85px;"></a>
+      <a onclick="newMovie('popcorn.jpg',
+            '<p>A sample of our world famous popcorn!</p>')" href="#"><img src="popcorn.jpg" alt="popcorn"
+          style="float:right;width:85px;height:85px;"></a>
+      CatClap Theaters<br>Address: 1600 Pennsylvania Ave.<br>Phone: 313-555-0123<br>Email: no
+    </p>
+  </header>
+
+  <nav>
+    <ul>
+      <h3>Now Showing</h3>
+      <hr>
+      <p><a
+          onclick="newMovie('https://www.youtube.com/embed/73_1biulkYk',
+            '<p>Directed by: Shawn Levy <br> Starring: Ryan Reynolds, Hugh Jackman, Emma Corrin <br> In Theaters: July 26, 2024 <br><br> Deadpool is offered a place in the Marvel Cinematic Universe by the Time Variance Authority, but instead recruits a variant of Wolverine to save his universe from extinction. </p>')"
+          href="#">Deadpool & Wolverine</a></p>
+      <p><a
+          onclick="newMovie('https://www.youtube.com/embed/u2NuUWuwPCM',
+            '<p>Directed by: Josh Cooley <br> Starring: Chris Hemsworth, Brian Tyree Henry, Scarlett Johansson <br> In Theaters: September 20, 2024 <br><br> The untold origin story of Optimus Prime and Megatron, better known as sworn enemies, but once were friends bonded like brothers who changed the fate of Cybertron forever. </p>')"
+          href="#">Transformers One</a></p>
+      <p><a
+          onclick="newMovie('https://www.youtube.com/embed/FjzxI6uf8H8',
+            '<p>Directed by: James Watkins <br> Starring: James McAvoy, Mackenzie Davis, Scoot McNairy <br> In Theaters: September 13, 2024 <br><br> A family is invited to spend a whole weekend in a lonely home in the countryside, but as the weekend progresses, they realize that a dark side lies within the family who invited them. </p>')"
+          href="#">Speak No Evil</a></p>
+      <p><a
+          onclick="newMovie('https://www.youtube.com/embed/CoZqL9N6Rx4',
+            '<p>Directed by: Tim Burton <br> Starring: Michael Keaton, Winona Ryder, Catherine O`Hara <br> In Theaters: September 6, 2024 <br><br> After a family tragedy, three generations of the Deetz family return home to Winter River. Still haunted by Beetlejuice, Lydias life is turned upside down when her teenage daughter, Astrid, accidentally opens the portal to the Afterlife. </p>')"
+          href="#">Beetlejuice Beetlejuice</a></p>
+      <p><br></p>
+
+      <h3>Coming Attractions</h3>
+      <hr>
+      <p><a
+          onclick="newMovie('https://www.youtube.com/embed/qSu6i2iFMO0',
+            '<p>Directed by: Jeff Fowler <br> Starring: Ben Schwartz, Colleen O`Shaughnessey, Idris Elba, Keanu Reeves <br> In Theaters: December 20, 2024 <br><br> Sonic, Knuckles, and Tails reunite against a powerful new adversary, Shadow, a mysterious villain with powers unlike anything they have faced before. With their abilities outmatched, Team Sonic must seek out an unlikely alliance. </p>')"
+          href="#">Sonic the Hedgehog 3</a></p>
+      <p><a
+          onclick="newMovie('https://www.youtube.com/embed/_OKAwz2MsJs',
+            '<p>Directed by: Todd Phillips <br> Starring: Joaquin Phoenix, Zazie Beetz, Lady Gaga <br> In Theaters: October 4, 2024 <br><br> Arthur Fleck is institutionalized at Arkham, awaiting trial for his crimes as Joker. While struggling with his dual identity, Arthur not only stumbles upon true love, but also finds the music thats always been inside him. </p>')"
+          href="#">Joker: Folie À Deux</a></p>
+      <p><a
+          onclick="newMovie('https://www.youtube.com/embed/HyIyd9joTTc',
+            '<p>Directed by: Kelly Marcel <br> Starring: Juno Temple, Tom Hardy, Alanna Ubach <br> In Theaters: October 25, 2024 <br><br> Eddie and Venom are on the run. Hunted by both of their worlds and with the net closing in, the duo are forced into a devastating decision that will bring the curtains down on Venom and Eddies last dance. </p>')"
+          href="#">Venom: The Last Dance</a></p>
+    </ul>
+  </nav>
+
+  <article>
+    <iframe src="" style="border:none;" id="iframe_a" height="80%" width="100%" title="Trailer"></iframe>
+    <hr>
+    <iframe src="" style="border:none;" id="iframe_b" height="20%" width="100%" title="Info"></iframe>
+    <script>
+      function newMovie(movie, info) {
+        document.getElementById("iframe_a").src = movie;
+        document.getElementById('iframe_b').srcdoc = info;
+      };
+    </script>
+  </article>
+
+  <footer>
+    <h3>Hot Links</h3>
+    <p>
+      <a href="https://www.imdb.com/" target="_blank">IMDB</a>
+      <a href="https://www.rottentomatoes.com/" target="_blank">ROTTEN TOMATOES</a>
+      <a href="https://www.google.com/maps/place/1600+Pennsylvania+Avenue+NW,+Washington,+DC+20500/@38.8977331,-77.0391053,17z/data=!3m1!4b1!4m6!3m5!1s0x89b7b7547d5f6f8f:0x9189ce80cfe6cbb2!8m2!3d38.897729!4d-77.0365304!16s%2Fg%2F11qzvkgf5x?entry=ttu&g_ep=EgoyMDI0MDkxOC4xIKXMDSoASAFQAw%3D%3D"
+        target="_blank">DIRECTIONS</a>
+      <a href="https://www.yelp.com/" target="_blank">RATE US</a>
+    </p>
+  </footer>
+
+</body>
+
+</html>
