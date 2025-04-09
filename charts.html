@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="latin-1" />
+    <title>Drum & Genre Stats</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            /* Stack the charts vertically */
+            gap: 20px;
+            /* Add some space between the charts */
+            align-items: center;
+            /* Center the charts horizontally */
+        }
+
+        .chart-box {
+            width: 90%;
+            /* Make the charts wide */
+            height: 600px;
+            position: relative;
+        }
+
+        .artist-chart-box {
+            width: 90%;
+            /* Make the charts tall */
+            height: 3500px;
+            position: relative;
+        }
+
+        .charter-chart-box {
+            width: 90%;
+            /* Make the charts tall */
+            height: 600px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>
+        <center><a href="index.html">🎵 Search 🎵</a>&nbsp&nbsp<a href="charts.html">📊 Stats 📊</a></center>
+    </h2>
+    <div class="chart-container">
+        <div class="chart-box">
+            <canvas id="drumsChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="genreChart"></canvas>
+        </div>
+        <div class="charter-chart-box">
+            <canvas id="charterChart"></canvas>
+        </div>
+        <div class="artist-chart-box">
+            <canvas id="artistChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        async function loadAndDisplayCharts() {
+            try {
+                const response = await fetch('data.json');
+                const songs = await response.json();
+
+                // Chart 1: Frequency of each diff_drums level
+                const drumFrequencies = {};
+
+                // Count each diff_drums level
+                songs.forEach(song => {
+                    const diff = song.diff_drums;
+                    if (typeof diff === 'number' && diff >= 0) {
+                        drumFrequencies[diff] = (drumFrequencies[diff] || 0) + 1;
+                    }
+                });
+
+                // Filter out genre with less than 15 songs
+                const filteredDrumFrequencies = Object.entries(drumFrequencies)
+                    .filter(([genre, count]) => count >= 15); // Only keep genre with more than 1 song
+
+                // Separate the filtered data into labels and values
+                const drumLabels = filteredDrumFrequencies.map(([genre]) => genre);
+                const drumValues = filteredDrumFrequencies.map(([_, count]) => count);
+
+                // Sort keys numerically
+                const drumLevels = Object.keys(drumLabels).sort((a, b) => a - b);
+                const drumCounts = drumLevels.map(level => drumValues[level]);
+
+                const drumsCtx = document.getElementById('drumsChart').getContext('2d');
+                new Chart(drumsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: drumLevels,
+                        datasets: [{
+                            label: 'Number of Songs',
+                            data: drumCounts,
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            padding: {
+                                top: 20,
+                                bottom: 20,
+                                left: 10,
+                                right: 10
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Frequency of Drum Difficulties'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Drum Difficulty'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Chart 2: Genre frequency (with capped y-axis limit without modifying the data)
+                const genreCounts = {};
+
+                songs.forEach(song => {
+                    const genre = song.Genre || 'Unknown';
+                    genreCounts[genre] = (genreCounts[genre] || 0) + 1;
+                });
+
+                // Filter out genres with less than 10 songs
+                const filteredGenreCounts = Object.entries(genreCounts)
+                    .filter(([genre, count]) => count >= 10); // Only keep genres with more than 1 song
+
+                // Separate the filtered data into labels and values
+                let genreLabels = filteredGenreCounts.map(([genre]) => genre);
+                let genreValues = filteredGenreCounts.map(([_, count]) => count);
+
+                // Sort the labels alphabetically and adjust the values accordingly
+                const sortedData = genreLabels
+                    .map((label, index) => ({ label, value: genreValues[index] }))  // Pair labels with their values
+                    .sort((a, b) => a.label.localeCompare(b.label));  // Sort by label alphabetically
+
+                // Reassign the sorted labels and values
+                genreLabels = sortedData.map(item => item.label);
+                genreValues = sortedData.map(item => item.value);
+
+                const genreCtx = document.getElementById('genreChart').getContext('2d');
+                new Chart(genreCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: genreLabels,
+                        datasets: [{
+                            label: 'Number of Songs',
+                            data: genreValues,  // Use the original, unmodified data
+                            backgroundColor: 'rgba(153, 102, 255, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            padding: {
+                                top: 20,
+                                bottom: 20,
+                                left: 10,
+                                right: 10
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Frequency of Genres'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                },
+                                max: 1000  // Limit the y-axis maximum to avoid skewing
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Genre'
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+
+                // Chart 3: Artist frequency
+                const artistCounts = {};
+
+                songs.forEach(song => {
+                    const artist = song.Artist || 'Unknown';
+                    artistCounts[artist] = (artistCounts[artist] || 0) + 1;
+                });
+
+                // Filter out artists with less than 10 songs
+                const filteredArtistCounts = Object.entries(artistCounts)
+                    .filter(([artist, count]) => count >= 10); // Only keep artists with more than 1 song
+
+                // Separate the filtered data into labels and values
+                let artistLabels = filteredArtistCounts.map(([artist]) => artist);
+                let artistValues = filteredArtistCounts.map(([_, count]) => count);
+
+                // Sort the labels alphabetically and adjust the values accordingly
+                const sortedArtisteData = artistLabels
+                    .map((label, index) => ({ label, value: artistValues[index] }))  // Pair labels with their values
+                    .sort((a, b) => a.label.localeCompare(b.label));  // Sort by label alphabetically
+
+                // Reassign the sorted labels and values
+                artistLabels = sortedArtisteData.map(item => item.label);
+                artistValues = sortedArtisteData.map(item => item.value);
+
+                const artistCtx = document.getElementById('artistChart').getContext('2d');
+                new Chart(artistCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: artistLabels,
+                        datasets: [{
+                            label: 'Number of Songs',
+                            data: artistValues,
+                            backgroundColor: 'rgba(129, 224, 85, 0.6)'
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            padding: {
+                                top: 20,
+                                bottom: 20,
+                                left: 10,
+                                right: 10
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Frequency of Artists'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Artist'
+                                },
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            },
+                            x: {
+                                max: 140
+                            }
+                        }
+                    }
+                });
+
+                // Chart 4: Charter frequency
+                const charterCounts = {};
+
+                songs.forEach(song => {
+                    const charter = song.Charter || 'Unknown';
+                    charterCounts[charter] = (charterCounts[charter] || 0) + 1;
+                });
+
+                // Filter out artists with less than 15 songs
+                const filteredCharterCounts = Object.entries(charterCounts)
+                    .filter(([charter, count]) => count >= 15); // Only keep artists with more than 1 song
+
+                // Separate the filtered data into labels and values
+                let charterLabels = filteredCharterCounts.map(([charter]) => charter);
+                let charterValues = filteredCharterCounts.map(([_, count]) => count);
+
+                // Sort the labels alphabetically and adjust the values accordingly
+                const sortedCharterData = charterLabels
+                    .map((label, index) => ({ label, value: charterValues[index] }))  // Pair labels with their values
+                    .sort((a, b) => a.label.localeCompare(b.label));  // Sort by label alphabetically
+
+                // Reassign the sorted labels and values
+                charterLabels = sortedCharterData.map(item => item.label);
+                charterValues = sortedCharterData.map(item => item.value);
+
+                const charterCtx = document.getElementById('charterChart').getContext('2d');
+                new Chart(charterCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: charterLabels,
+                        datasets: [{
+                            label: 'Number of Songs',
+                            data: charterValues,
+                            backgroundColor: 'rgba(222, 73, 113, 0.6)'
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            padding: {
+                                top: 20,
+                                bottom: 20,
+                                left: 10,
+                                right: 10
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Frequency of Charters'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Charter'
+                                },
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            },
+                            x: {
+                                max: 1000
+                            }
+                        }
+                    }
+                });
+
+            } catch (err) {
+                console.error('Error loading JSON:', err);
+            }
+        }
+
+        window.onload = loadAndDisplayCharts;
+    </script>
+</body>
+
+</html>

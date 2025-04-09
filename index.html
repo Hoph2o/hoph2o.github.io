@@ -1,59 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="latin-1">
   <title>Birdman Drive Search</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    input { width: 410px; padding: 8px; margin-bottom: 20px; font-size: 16px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background-color: #f2f2f2; }
-    tr:hover { background-color: #f9f9f9; }
-    .pagination { margin-top: 20px; }
-    .pagination button { padding: 8px 12px; margin: 0 5px; cursor: pointer; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    input {
+      width: 410px;
+      padding: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .pagination {
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      padding: 8px 12px;
+      margin: 0 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
 
-<h2><center>🎵 Birdman Drive Search 🎵</center></h2>
-<center><input type="text" id="searchInput" placeholder="Search by Artist, Song Name, Album, Genre, or Charter..."></center>
+  <h2>
+    <center><a href="index.html">🎵 Search 🎵</a>&nbsp&nbsp<a href="charts.html">📊 Stats 📊</a></center>
+  </h2>
+  <center><input type="text" id="searchInput" placeholder="Search by Artist, Song Name, Album, Genre, or Charter...">
+  </center>
 
-<table id="resultsTable">
-  <thead>
-    <tr>
-      <th>Artist</th>
-      <th>Name</th>
-      <th>Album</th>
-      <th>Genre</th>
-      <th>Intensity</th>
-      <th>Charter</th>
-      <th>Song Length</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+  <table id="resultsTable">
+    <thead>
+      <tr>
+        <th>Artist</th>
+        <th>Name</th>
+        <th>Album</th>
+        <th>Genre</th>
+        <th>Intensity</th>
+        <th>Charter</th>
+        <th>Song Length</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-<div class="pagination">
-  <button id="prevPage" disabled>Previous</button>
-  <button id="nextPage">Next</button>
-</div>
+  <div class="pagination">
+    <button id="prevPage" disabled>Previous</button>
+    <button id="nextPage">Next</button>
+  </div>
 
-<script>
-  const input = document.getElementById("searchInput");
-  const tbody = document.querySelector("#resultsTable tbody");
-  const prevPageButton = document.getElementById("prevPage");
-  const nextPageButton = document.getElementById("nextPage");
+  <script>
+    const input = document.getElementById("searchInput");
+    const tbody = document.querySelector("#resultsTable tbody");
+    const prevPageButton = document.getElementById("prevPage");
+    const nextPageButton = document.getElementById("nextPage");
 
-  const itemsPerPage = 28;  // Change this to set max items per page
-  let data = [];
-  let currentPage = 1;
-  let filteredData = [];
+    const itemsPerPage = 28;  // Change this to set max items per page
+    let data = [];
+    let currentPage = 1;
+    let filteredData = [];
 
-  function renderTable(dataToDisplay) {
-    tbody.innerHTML = "";
-    dataToDisplay.forEach(item => {
-      const row = `<tr>
+    function renderTable(dataToDisplay) {
+      tbody.innerHTML = "";
+      dataToDisplay.forEach(item => {
+        const row = `<tr>
         <td>${item.Artist}</td>
         <td>${item.Name}</td>
         <td>${item.Album}</td>
@@ -62,63 +101,64 @@
         <td>${item.Charter}</td>
         <td>${item.song_length}</td>
       </tr>`;
-      tbody.innerHTML += row;
-    });
-  }
-
-  function updatePagination() {
-    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-    prevPageButton.disabled = currentPage === 1;
-    nextPageButton.disabled = currentPage === totalPages;
-  }
-
-  function updatePage() {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = currentPage * itemsPerPage;
-    const pageData = filteredData.slice(startIndex, endIndex);
-    renderTable(pageData);
-    updatePagination();
-  }
-
-  input.addEventListener("input", () => {
-    const query = input.value.toLowerCase();
-    filteredData = data.filter(item =>
-      item.Artist.toLowerCase().includes(query) ||
-      item.Name.toLowerCase().includes(query) ||
-      item.Album.toLowerCase().includes(query) ||
-      item.Genre.toLowerCase().includes(query) ||
-      item.Charter.toLowerCase().includes(query)
-    );
-    currentPage = 1;  // Reset to first page when search changes
-    updatePage();
-  });
-
-  prevPageButton.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage--;
-      updatePage();
+        tbody.innerHTML += row;
+      });
     }
-  });
 
-  nextPageButton.addEventListener("click", () => {
-    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-    if (currentPage < totalPages) {
-      currentPage++;
-      updatePage();
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+      prevPageButton.disabled = currentPage === 1;
+      nextPageButton.disabled = currentPage === totalPages;
     }
-  });
 
-  fetch("data.json")
-    .then(response => response.json())
-    .then(json => {
-      data = json;
-      filteredData = json;
+    function updatePage() {
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = currentPage * itemsPerPage;
+      const pageData = filteredData.slice(startIndex, endIndex);
+      renderTable(pageData);
+      updatePagination();
+    }
+
+    input.addEventListener("input", () => {
+      const query = input.value.toLowerCase();
+      filteredData = data.filter(item =>
+        item.Artist.toLowerCase().includes(query) ||
+        item.Name.toLowerCase().includes(query) ||
+        item.Album.toLowerCase().includes(query) ||
+        item.Genre.toLowerCase().includes(query) ||
+        item.Charter.toLowerCase().includes(query)
+      );
+      currentPage = 1;  // Reset to first page when search changes
       updatePage();
-    })
-    .catch(error => {
-      console.error("Error loading data.json:", error);
     });
-</script>
+
+    prevPageButton.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePage();
+      }
+    });
+
+    nextPageButton.addEventListener("click", () => {
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        updatePage();
+      }
+    });
+
+    fetch("data.json")
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        filteredData = json;
+        updatePage();
+      })
+      .catch(error => {
+        console.error("Error loading data.json:", error);
+      });
+  </script>
 
 </body>
+
 </html>
