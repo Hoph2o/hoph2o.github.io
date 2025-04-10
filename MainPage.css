@@ -20,7 +20,7 @@ table {
 th,
 td {
     border: 1px solid #ccc;
-    padding: 8px;
+    padding: 5px;
     text-align: left;
 }
 
@@ -30,6 +30,12 @@ th {
 
 tr:hover {
     background-color: #fcfcfc;
+}
+
+.loaders button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
 }
 
 .pagination {
@@ -61,8 +67,6 @@ tr:hover {
 
 .artist-chart-box {
     width: 90%;
-    /* Make the charts tall */
-    height: 3500px;
     position: relative;
 }
 

@@ -10,10 +10,18 @@
 <body>
 
   <h2>
-    <center><a href="index.html" class="nav-link">🎵 Search 🎵</a>&nbsp&nbsp<a href="charts.html" class="nav-link">📊 Stats 📊</a></center>
+    <center><a href="index.html" class="nav-link">🎵 Search 🎵</a>&nbsp&nbsp<a href="charts.html" class="nav-link">📊
+        Stats 📊</a></center>
   </h2>
   <center><input type="text" id="searchInput" placeholder="Search by Artist, Song Name, Album, Genre, or Charter...">
   </center>
+
+  <div class="loaders">
+    <center>
+      <button id="btn1">Load Birdman Data</button>
+      <button id="btn2">Load DM Data</button>
+    </center>
+  </div>
 
   <table id="resultsTable">
     <thead>
@@ -41,7 +49,7 @@
     const prevPageButton = document.getElementById("prevPage");
     const nextPageButton = document.getElementById("nextPage");
 
-    const itemsPerPage = 28;  // Change this to set max items per page
+    const itemsPerPage = 35;
     let data = [];
     let currentPage = 1;
     let filteredData = [];
@@ -50,14 +58,14 @@
       tbody.innerHTML = "";
       dataToDisplay.forEach(item => {
         const row = `<tr>
-        <td>${item.Artist}</td>
-        <td>${item.Name}</td>
-        <td>${item.Album}</td>
-        <td>${item.Genre}</td>
-        <td>${item.diff_drums}</td>
-        <td>${item.Charter}</td>
-        <td>${item.song_length}</td>
-      </tr>`;
+          <td>${item.Artist}</td>
+          <td>${item.Name}</td>
+          <td>${item.Album}</td>
+          <td>${item.Genre}</td>
+          <td>${item.diff_drums}</td>
+          <td>${item.Charter}</td>
+          <td>${item.song_length}</td>
+        </tr>`;
         tbody.innerHTML += row;
       });
     }
@@ -76,6 +84,21 @@
       updatePagination();
     }
 
+    function fetchAndDisplayData(fileName) {
+      fetch(fileName)
+        .then(response => response.json())
+        .then(json => {
+          data = json;
+          filteredData = json;
+          currentPage = 1;
+          updatePage();
+        })
+        .catch(error => {
+          console.error(`Error loading ${fileName}:`, error);
+        });
+    }
+
+    // Event listeners
     input.addEventListener("input", () => {
       const query = input.value.toLowerCase();
       filteredData = data.filter(item =>
@@ -85,7 +108,7 @@
         item.Genre.toLowerCase().includes(query) ||
         item.Charter.toLowerCase().includes(query)
       );
-      currentPage = 1;  // Reset to first page when search changes
+      currentPage = 1;
       updatePage();
     });
 
@@ -104,17 +127,19 @@
       }
     });
 
-    fetch("data.json")
-      .then(response => response.json())
-      .then(json => {
-        data = json;
-        filteredData = json;
-        updatePage();
-      })
-      .catch(error => {
-        console.error("Error loading data.json:", error);
-      });
+    // Load default file
+    fetchAndDisplayData("BirdData.json");
+
+    // Button actions
+    document.getElementById("btn1").addEventListener("click", () => {
+      fetchAndDisplayData("BirdData.json");
+    });
+
+    document.getElementById("btn2").addEventListener("click", () => {
+      fetchAndDisplayData("DMData.json");
+    });
   </script>
+
 
 </body>
 
