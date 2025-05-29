@@ -1,0 +1,12 @@
+{
+  "Leaderboard A": [
+    { "name": "Alice", "score": 1000 },
+    { "name": "Bob", "score": 950 },
+    { "name": "Charlie", "score": 900 }
+  ],
+  "Leaderboard B": [
+    { "name": "David", "score": 1100 },
+    { "name": "Eve", "score": 1075 },
+    { "name": "Frank", "score": 1050 }
+  ]
+}
