@@ -1,83 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Dual Leaderboard</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-      background: #f4f4f4;
-    }
+    <meta charset="UTF-8">
+    <title>Dual Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background: #f4f4f4;
+        }
 
-    h1 {
-      text-align: center;
-    }
+        h1 {
+            text-align: center;
+        }
 
-    .leaderboard-container {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+        .leaderboard-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    .leaderboard {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      width: 300px;
-      padding: 1rem;
-    }
+        .leaderboard {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 1rem;
+        }
 
-    .leaderboard h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+        .leaderboard h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
 
-    .leaderboard ol {
-      padding-left: 1.2rem;
-    }
+        .leaderboard ol {
+            padding-left: 1.2rem;
+        }
 
-    .leaderboard li {
-      margin: 0.5rem 0;
-      font-size: 1.1rem;
-    }
-  </style>
+        .leaderboard li {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .leaderboard table {
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        .leaderboard td {
+            padding: 4px 8px;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Game Leaderboards</h1>
+    <h1>Milk Speedruns</h1>
 
-  <div class="leaderboard-container" id="leaderboards"></div>
+    <div class="leaderboard-container" id="leaderboards"></div>
 
-  <script>
-    // Load and display leaderboard data
-    fetch('leaderboards.json')
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById('leaderboards');
+    <script>
+        // Load and display leaderboard data
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('leaderboards');
 
-        Object.entries(data).forEach(([title, entries]) => {
-          const board = document.createElement('div');
-          board.className = 'leaderboard';
+                Object.entries(data).forEach(([title, entries]) => {
+                    const board = document.createElement('div');
+                    board.className = 'leaderboard';
 
-          const heading = document.createElement('h2');
-          heading.textContent = title;
+                    const heading = document.createElement('h2');
+                    heading.textContent = title;
 
-          const list = document.createElement('ol');
-          entries.forEach(entry => {
-            const item = document.createElement('li');
-            item.textContent = `${entry.name} - ${entry.score}`;
-            list.appendChild(item);
-          });
+                    const table = document.createElement('table');
+                    table.style.width = '100%';
+                    table.style.borderCollapse = 'collapse';
 
-          board.appendChild(heading);
-          board.appendChild(list);
-          container.appendChild(board);
-        });
-      })
-      .catch(error => {
-        console.error('Error loading leaderboard data:', error);
-      });
-  </script>
+                    entries.forEach(entry => {
+                        const row = document.createElement('tr');
+
+                        const nameCell = document.createElement('td');
+                        nameCell.textContent = entry.name;
+                        nameCell.style.textAlign = 'left';
+                        nameCell.style.padding = '4px';
+
+                        const timeCell = document.createElement('td');
+                        timeCell.textContent = entry.time;
+                        timeCell.style.textAlign = 'right';
+                        timeCell.style.padding = '4px';
+
+                        row.appendChild(nameCell);
+                        row.appendChild(timeCell);
+                        table.appendChild(row);
+                    });
+
+                    board.appendChild(heading);
+                    board.appendChild(table);
+
+                    container.appendChild(board);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading leaderboard data:', error);
+            });
+    </script>
 </body>
+
 </html>

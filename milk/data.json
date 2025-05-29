@@ -1,12 +1,11 @@
 {
-  "Leaderboard A": [
-    { "name": "Alice", "score": 1000 },
-    { "name": "Bob", "score": 950 },
-    { "name": "Charlie", "score": 900 }
+  "Any%": [
+    { "name": "Victor Ogawa", "time": "05:46" },
+    { "name": "HopH2O", "time": "unknown" },
+    { "name": "Benimaru", "time": "unknown" }
   ],
-  "Leaderboard B": [
-    { "name": "David", "score": 1100 },
-    { "name": "Eve", "score": 1075 },
-    { "name": "Frank", "score": 1050 }
+  "100%": [
+    { "name": "BirdmanExe", "time": "02:30:00(?)" },
+    { "name": "HopH2O", "time": "03:25:50" }
   ]
 }
