@@ -2,6 +2,13 @@ let audioContext, sourceNode, gainNode, eqFilters = [];
 let startTime = 0, pausedAt = 0, duration = 0, buffer = null;
 const seekBar = document.getElementById('seekBar');
 const timeDisplay = document.getElementById('timeDisplay');
+const speedSlider = document.getElementById('speed');
+const speedDisplay = document.getElementById('speedDisplay');
+
+// Ensure speed display shows 2 decimal places on load
+speedDisplay.textContent = `${parseFloat(speedSlider.value).toFixed(2)}x`;
+speedSlider.title = `${parseFloat(speedSlider.value).toFixed(2)}x`;
+
 
 fetch('audio_list.json')
   .then(res => res.json())
@@ -24,6 +31,12 @@ document.querySelectorAll('#bass, #mid, #treble, #gain').forEach(input => {
   });
 });
 
+speedSlider.addEventListener('input', () => {
+  const speed = parseFloat(speedSlider.value);
+  speedSlider.title = `${speed.toFixed(2)}x`;
+  speedDisplay.textContent = `${speed.toFixed(2)}x`;
+});
+
 function playAudio() {
   const file = document.getElementById('audioFile').files[0];
   const preset = document.getElementById('presetSelect').value;
@@ -36,17 +49,6 @@ function playAudio() {
   stopAudio();
   audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-  // If buffer is already loaded (from previous playback), just resume from seek position
-  if (buffer) {
-    const seekPosition = parseFloat(seekBar.value) || 0;
-    duration = buffer.duration;
-    createAudioGraph();
-    sourceNode.start(0, seekPosition);
-    startTime = audioContext.currentTime - seekPosition;
-    updateSeekBar();
-    return;
-  }
-
   const loadBuffer = arrayBuffer => {
     audioContext.decodeAudioData(arrayBuffer, decoded => {
       buffer = decoded;
@@ -54,7 +56,7 @@ function playAudio() {
       const seekPosition = parseFloat(seekBar.value) || 0;
       createAudioGraph();
       sourceNode.start(0, seekPosition);
-      startTime = audioContext.currentTime - seekPosition;
+      startTime = audioContext.currentTime - seekPosition / sourceNode.playbackRate.value;
       updateSeekBar();
     });
   };
@@ -71,10 +73,11 @@ function playAudio() {
   }
 }
 
-
 function createAudioGraph() {
   sourceNode = audioContext.createBufferSource();
   sourceNode.buffer = buffer;
+
+  sourceNode.playbackRate.value = parseFloat(speedSlider.value);
 
   gainNode = audioContext.createGain();
   eqFilters = [
@@ -127,15 +130,17 @@ function stopAudio() {
 function pauseAudio() {
   if (audioContext && sourceNode) {
     sourceNode.stop();
-    pausedAt = audioContext.currentTime - startTime;
+    pausedAt = (audioContext.currentTime - startTime) * sourceNode.playbackRate.value;
     clearInterval(seekInterval);
   }
 }
 
 let seekInterval;
 function updateSeekBar() {
+  clearInterval(seekInterval);
   seekInterval = setInterval(() => {
-    const currentTime = audioContext.currentTime - startTime;
+    const speed = parseFloat(speedSlider.value);
+    const currentTime = (audioContext.currentTime - startTime) * speed;
     seekBar.max = duration;
     seekBar.value = currentTime;
     timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
@@ -152,11 +157,11 @@ function activateJameosMode() {
   const bassSlider = document.getElementById('bass');
   const gainSlider = document.getElementById('gain');
 
-  bassSlider.value = 30;
-  gainSlider.value = 5;
+  bassSlider.value = 10;
+  gainSlider.value = 4;
 
-  bassSlider.title = "30 dB";
-  gainSlider.title = "5x gain";
+  bassSlider.title = "10 dB";
+  gainSlider.title = "4x gain";
 
   updateAudioSettings();
 }
