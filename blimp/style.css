@@ -61,3 +61,27 @@ select, input[type="file"], button {
 #speedDisplay {
   margin-left: 10px;
 }
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-mode .container {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  color: #f1f1f1;
+}
+
+body.dark-mode select,
+body.dark-mode input[type="file"],
+body.dark-mode input[type="range"],
+body.dark-mode button {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+body.dark-mode .slider-label {
+  color: #ddd;
+}

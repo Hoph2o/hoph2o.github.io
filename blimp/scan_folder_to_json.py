@@ -13,6 +13,6 @@ def scan_folder(folder_path, output_json):
 
 # === USAGE EXAMPLE ===
 if __name__ == "__main__":
-    folder_to_scan = r"C:\Users\hoph2\PycharmProjects\Bass Boost\audio"  # <--- change this
+    folder_to_scan = r"C:\Users\hoph2\Documents\GitHub\hoph2o.github.io\blimp\audio"  # <--- change this
     output_json_file = "audio_list.json"  # or give full path if needed
     scan_folder(folder_to_scan, output_json_file)
