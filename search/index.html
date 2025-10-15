@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="latin-1">
+  <title>Birdman Drive Search</title>
+  <link rel="stylesheet" href="MainPage.css">
+</head>
+
+<body>
+
+  <h2>
+    <center><a href="index.html" class="nav-link">🎵 Search 🎵</a>&nbsp&nbsp<a href="charts.html" class="nav-link">📊
+        Stats 📊</a></center>
+  </h2>
+  <center><input type="text" id="searchInput" placeholder="Search by Artist, Song Name, Album, Genre, or Charter...">
+  </center>
+
+  <div class="loaders">
+    <center>
+      <button id="btn1">Load Birdman Data</button>
+      <button id="btn2">Load DM Data</button>
+    </center>
+  </div>
+
+  <table id="resultsTable">
+    <thead>
+      <tr>
+        <th>Artist</th>
+        <th>Name</th>
+        <th>Album</th>
+        <th>Genre</th>
+        <th>Intensity</th>
+        <th>Charter</th>
+        <th>Song Length</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="pagination">
+    <button id="prevPage" disabled>Previous</button>
+    <button id="nextPage">Next</button>
+  </div>
+
+  <script>
+    const input = document.getElementById("searchInput");
+    const tbody = document.querySelector("#resultsTable tbody");
+    const prevPageButton = document.getElementById("prevPage");
+    const nextPageButton = document.getElementById("nextPage");
+
+    const itemsPerPage = 34;
+    let data = [];
+    let currentPage = 1;
+    let filteredData = [];
+
+    function renderTable(dataToDisplay) {
+      tbody.innerHTML = "";
+      dataToDisplay.forEach(item => {
+        const row = `<tr>
+          <td>${item.Artist}</td>
+          <td>${item.Name}</td>
+          <td>${item.Album}</td>
+          <td>${item.Genre}</td>
+          <td>${item.diff_drums}</td>
+          <td>${item.Charter}</td>
+          <td>${item.song_length}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+      prevPageButton.disabled = currentPage === 1;
+      nextPageButton.disabled = currentPage === totalPages;
+    }
+
+    function updatePage() {
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = currentPage * itemsPerPage;
+      const pageData = filteredData.slice(startIndex, endIndex);
+      renderTable(pageData);
+      updatePagination();
+    }
+
+    function fetchAndDisplayData(fileName) {
+      fetch(fileName)
+        .then(response => response.json())
+        .then(json => {
+          data = json;
+          filteredData = json;
+          currentPage = 1;
+          updatePage();
+        })
+        .catch(error => {
+          console.error(`Error loading ${fileName}:`, error);
+        });
+    }
+
+    // Event listeners
+    input.addEventListener("input", () => {
+      const query = input.value.toLowerCase();
+      filteredData = data.filter(item =>
+        item.Artist.toLowerCase().includes(query) ||
+        item.Name.toLowerCase().includes(query) ||
+        item.Album.toLowerCase().includes(query) ||
+        item.Genre.toLowerCase().includes(query) ||
+        item.Charter.toLowerCase().includes(query)
+      );
+      currentPage = 1;
+      updatePage();
+    });
+
+    prevPageButton.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePage();
+      }
+    });
+
+    nextPageButton.addEventListener("click", () => {
+      const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        updatePage();
+      }
+    });
+
+    // Load default file
+    fetchAndDisplayData("BirdData.json");
+
+    // Button actions
+    document.getElementById("btn1").addEventListener("click", () => {
+      fetchAndDisplayData("BirdData.json");
+    });
+
+    document.getElementById("btn2").addEventListener("click", () => {
+      fetchAndDisplayData("DMData.json");
+    });
+  </script>
+
+
+</body>
+
+</html>
