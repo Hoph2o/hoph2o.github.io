@@ -1,0 +1,191 @@
+<!-- index.html (refactored: dynamic header logo + fixed 2‑dp accuracy) -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="wrap">
+        <nav id="tabs" class="tabs" role="tablist" aria-label="Leaderboards"></nav>
+
+        <div class="card" aria-live="polite">
+            <header>
+                <div class="title">
+                    <img id="bandLogo" class="logo" src="" alt="Band Logo" />
+                    <div>
+                        <h1 id="boardTitle" style="margin:0;font-size:18px;line-height:1.2">Discography Leaderboard</h1>
+                        <div class="muted">Click a score to view its image fullscreen</div>
+                    </div>
+                </div>
+            </header>
+
+            <div style="overflow:auto; padding:6px 10px 10px;">
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Score</th>
+                            <th>Accuracy</th>
+                            <th>Max Combo</th>
+                            <th>Game</th>
+                            <th>Version</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay" class="fullscreen-overlay" onclick="this.classList.remove('active')">
+        <img id="overlayImg" src="" alt="Score Image">
+    </div>
+
+    <script>
+        // ---------- DOM refs ----------
+        const tabsEl = document.getElementById('tabs');
+        const tbody = document.querySelector('#table tbody');
+        const overlay = document.getElementById('overlay');
+        const overlayImg = document.getElementById('overlayImg');
+        const boardTitle = document.getElementById('boardTitle');
+        const bandLogo = document.getElementById('bandLogo');
+
+        // ---------- State ----------
+        let boards = [];
+        let currentBoardId = localStorage.getItem('lb_board_id') || 'hail-the-sun';
+
+        // ---------- Boot ----------
+        loadAll();
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.classList.remove('active'); });
+
+        // ---------- Data loading ----------
+        async function loadAll() {
+            try {
+                const res = await fetch('discog.json', { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const json = await res.json();
+                boards = json.boards || [];
+            } catch (err) {
+                console.warn('Falling back to sample leaderboards:', err);
+                boards = (JSON.parse(document.getElementById('sample-leaderboards').textContent).boards) || [];
+            }
+            if (!boards.length) return;
+            if (!boards.find(b => b.id === currentBoardId)) currentBoardId = boards[0].id;
+            renderTabs(boards);
+            setActive(currentBoardId);
+            renderRows(getBoard(currentBoardId)?.entries || []);
+        }
+
+        // ---------- Rendering ----------
+        function renderTabs(boards) {
+            tabsEl.innerHTML = boards.map(b => {
+                const selected = b.id === currentBoardId;
+                const aria = selected ? 'true' : 'false';
+                const logo = b.logo ? `<img src="${escapeAttr(b.logo)}" alt="" class="tab-logo" onerror="this.style.opacity=.3">` : '';
+                return `<button class="tab${selected ? ' active' : ''}" role="tab" aria-selected="${aria}" data-id="${escapeAttr(b.id)}">${logo}<span>${escapeHtml(b.name || '')}</span></button>`;
+            }).join('');
+
+            tabsEl.querySelectorAll('.tab').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.id;
+                    setActive(id);
+                    renderRows(getBoard(id)?.entries || []);
+                });
+            });
+        }
+
+        function renderRows(data) {
+            // Sort by Score (desc). Treat missing/NaN as 0 so they sink.
+            const sorted = [...data].sort((a, b) => {
+                const sa = Number.isFinite(Number(a?.Score)) ? Number(a.Score) : 0;
+                const sb = Number.isFinite(Number(b?.Score)) ? Number(b.Score) : 0;
+                if (sb !== sa) return sb - sa; // higher first
+                // stable secondary sort to avoid jitter within ties
+                return String(a?.Username || '').localeCompare(String(b?.Username || ''));
+            });
+
+            // Compute competition ranks (1,2,2,4)
+            let prevScore = null;
+            let prevRank = 0;
+
+            tbody.innerHTML = sorted.map((r, i) => {
+                const scoreVal = Number.isFinite(Number(r?.Score)) ? Number(r.Score) : 0;
+                const rank = (prevScore !== null && scoreVal === prevScore) ? prevRank : (i + 1);
+                prevScore = scoreVal;
+                prevRank = rank;
+
+                const acc = (typeof r?.Accuracy === 'number')
+                    ? `${r.Accuracy.toFixed(2)}%`
+                    : (r?.Accuracy ?? '');
+
+                return (
+                    `<tr>
+        <td>${rank}</td>
+        <td>
+          <div class="user">
+            <img class="avatar" src="${escapeAttr(r?.Icon ?? r?.Image ?? '')}" alt="${escapeAttr(r?.Username ?? '')}">
+            <div>${escapeHtml(r?.Username ?? '')}</div>
+          </div>
+        </td>
+        <td class="score" data-image="${escapeAttr(r?.ScoreImage ?? '')}">${r?.Score ?? ''}</td>
+        <td>${acc}</td>
+        <td>${r?.['Max Combo'] ?? ''}</td>
+        <td>${escapeHtml(r?.Game ?? '')}</td>
+        <td>${escapeHtml(r?.Version ?? '')}</td>
+      </tr>`
+                );
+            }).join('');
+
+            // click-to-fullscreen for score image
+            tbody.querySelectorAll('.score').forEach(cell => {
+                cell.addEventListener('click', () => {
+                    const src = cell.dataset.image;
+                    if (src) {
+                        overlayImg.src = src;
+                        overlay.classList.add('active');
+                    }
+                });
+            });
+        }
+
+
+        // ---------- Helpers ----------
+        function getBoard(id) { return boards.find(b => b.id === id); }
+
+        function setActive(id) {
+            currentBoardId = id;
+            localStorage.setItem('lb_board_id', id);
+
+            // tabs UI state
+            tabsEl.querySelectorAll('.tab').forEach(b => {
+                const active = b.dataset.id === id;
+                b.classList.toggle('active', active);
+                b.setAttribute('aria-selected', active);
+            });
+
+            // header title + logo
+            const b = getBoard(id);
+            const title = (b?.name || 'Leaderboard') + ' Discography Leaderboard';
+            boardTitle.textContent = title;
+            document.title = (b?.name || 'Leaderboard') + ' - Leaderboard';
+
+            if (bandLogo && b?.logo) {
+                bandLogo.src = b.logo;
+                bandLogo.style.display = 'block';
+            } else if (bandLogo) {
+                bandLogo.style.display = 'none';
+            }
+        }
+
+        function escapeHtml(str) { return String(str == null ? '' : str).replace(/[&<>"']/g, s => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[s])); }
+        function escapeAttr(str) { return escapeHtml(str).replace(/\n/g, ' '); }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+{
+  "boards": [
+    {
+      "id": "ch-10",
+      "name": "CH 1.0",
+      "logo": "images/logos/ch-10.png",
+      "entries": [
+        {
+          "Rank": 1,
+          "Username": "BIIIIG BODDY",
+          "Score": 32545880,
+          "Game": "CH 1.0",
+          "Accuracy": 0.999,
+          "Max Combo": 26140,
+          "Version": 2024.0
+        },
+        {
+          "Rank": 1,
+          "Username": "PILE",
+          "Score": 24363330,
+          "Game": "CH 1.0",
+          "Accuracy": 0.9981,
+          "Max Combo": 6709,
+          "Version": 2024.0
+        },
+        {
+          "Rank": 2,
+          "Username": "thumper",
+          "Score": 32025580,
+          "Game": "CH 1.0",
+          "Accuracy": 0.9986,
+          "Max Combo": 8538,
+          "Version": 2024.0
+        },
+        {
+          "Rank": 3,
+          "Username": "Splax*",
+          "Score": 32010965,
+          "Game": "CH 1.0",
+          "Accuracy": 0.9984,
+          "Max Combo": 9613,
+          "Version": 2024.0
+        },
+        {
+          "Rank": 4,
+          "Username": "BIIIIG BODDY",
+          "Score": 31957500,
+          "Game": "CH 1.0",
+          "Accuracy": 0.9978,
+          "Max Combo": 5967,
+          "Version": 2024.0
+        },
+        {
+          "Rank": 5,
+          "Username": "Snivy",
+          "Score": 31939705,
+          "Game": "CH 1.0",
+          "Accuracy": 0.9972,
+          "Max Combo": 4432,
+          "Version": 2024.0
+        },
+        {
+          "Rank": 6,
+          "Username": "PILE",
+          "Score": 30510465,
+          "Game": "CH 1.0",
+          "Accuracy": 0.9932,
+          "Max Combo": 3495,
+          "Version": 2024.0
+        },
+        {
+          "Rank": 12,
+          "Username": "Tomato",
+          "Score": 21007500,
+          "Game": "CH 1.0",
+          "Accuracy": 0.9899,
+          "Max Combo": 3877,
+          "Version": 2021.0
+        },
+        {
+          "Rank": 15,
+          "Username": "HopH2O",
+          "Score": 11468520,
+          "Game": "CH 1.0",
+          "Accuracy": 0.8966,
+          "Max Combo": 369,
+          "Version": 2021.0
+        }
+      ]
+    },
+    {
+      "id": "rb3",
+      "name": "RB3",
+      "logo": "images/logos/rb3.png",
+      "entries": [
+        {
+          "Rank": 14,
+          "Username": "BirdmanExe",
+          "Score": 14361070,
+          "Game": "RB3",
+          "Accuracy": null,
+          "Max Combo": null,
+          "Version": 2023.0
+        }
+      ]
+    },
+    {
+      "id": "scorespy",
+      "name": "ScoreSpy",
+      "logo": "images/logos/scorespy.png",
+      "entries": [
+        {
+          "Rank": 1,
+          "Username": "PILE",
+          "Score": 49545405,
+          "Game": "ScoreSpy",
+          "Accuracy": 0.996,
+          "Max Combo": 6196,
+          "Version": 2022.0
+        },
+        {
+          "Rank": 7,
+          "Username": "beud497",
+          "Score": 30407165,
+          "Game": "ScoreSpy",
+          "Accuracy": 0.9976,
+          "Max Combo": 6826,
+          "Version": 2023.0
+        },
+        {
+          "Rank": 8,
+          "Username": "Advanst",
+          "Score": 30139285,
+          "Game": "ScoreSpy",
+          "Accuracy": 0.9957,
+          "Max Combo": 4681,
+          "Version": 2023.0
+        },
+        {
+          "Rank": 9,
+          "Username": "Satan",
+          "Score": 28857135,
+          "Game": "ScoreSpy",
+          "Accuracy": 0.9932,
+          "Max Combo": 2670,
+          "Version": 2023.0
+        },
+        {
+          "Rank": 10,
+          "Username": "PILE",
+          "Score": 27546480,
+          "Game": "ScoreSpy",
+          "Accuracy": 0.9793,
+          "Max Combo": 2721,
+          "Version": 2023.0
+        },
+        {
+          "Rank": 11,
+          "Username": "HopH2O",
+          "Score": 24919995,
+          "Game": "ScoreSpy",
+          "Accuracy": 0.9752,
+          "Max Combo": 1691,
+          "Version": 2023.0
+        },
+        {
+          "Rank": 13,
+          "Username": "LevyLand",
+          "Score": 20090040,
+          "Game": "ScoreSpy",
+          "Accuracy": 0.9429,
+          "Max Combo": 564,
+          "Version": 2023.0
+        }
+      ]
+    },
+    {
+      "id": "scorespy",
+      "name": "Scorespy",
+      "logo": "images/logos/scorespy.png",
+      "entries": [
+        {
+          "Rank": 2,
+          "Username": "PILE",
+          "Score": 18613170,
+          "Game": "Scorespy",
+          "Accuracy": 0.9945,
+          "Max Combo": 2295,
+          "Version": 2020.0
+        },
+        {
+          "Rank": 3,
+          "Username": "TCMusic",
+          "Score": 17250285,
+          "Game": "Scorespy",
+          "Accuracy": 0.9865,
+          "Max Combo": 1377,
+          "Version": 2020.0
+        },
+        {
+          "Rank": 4,
+          "Username": "Hoph2o",
+          "Score": 12996950,
+          "Game": "Scorespy",
+          "Accuracy": 0.9691,
+          "Max Combo": 365,
+          "Version": 2020.0
+        }
+      ]
+    }
+  ]
+}

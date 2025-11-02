@@ -1,0 +1,108 @@
+{
+  "boards": [
+    {
+      "id": "hail-the-sun", "name": "Hail The Sun", "logo": "images/logos/hail-the-sun.webp",
+      "entries": [
+        {
+          "Username": "BIIIIG BODDY", "Score": 32545880, "Game": "CH 1.0", "Accuracy": 99.9, "Max Combo": 26140, "Version": "2024",
+          "Icon": "https://cdn.discordapp.com/avatars/274262209515880448/4c21b040f021d74411e2dde12bad6708.png", "ScoreImage": "images/scores/boddy-hts2.png"
+        },
+        {
+          "Username": "thumper", "Score": 32025580, "Game": "CH 1.0", "Accuracy": 99.86, "Max Combo": 8538, "Version": "2024",
+          "Icon": "https://cdn.discordapp.com/avatars/632969182761451522/eba419a26c02e3c93b0b02eda1367dff.png", "ScoreImage": "images/scores/beud-hts2.png"
+        },
+        {
+          "Username": "Splax", "Score": 32010965, "Game": "CH 1.0", "Accuracy": 99.84, "Max Combo": 9613, "Version": "2024",
+          "Icon": "https://cdn.discordapp.com/avatars/300367873099169803/29f6a556c097396fc10afbac5f2a53ea.png", "ScoreImage": "images/scores/splax-hts1.png"
+        },
+        {
+          "Username": "BIIIIG BODDY", "Score": 31957500, "Game": "CH 1.0", "Accuracy": 99.78, "Max Combo": 5967, "Version": "2024",
+          "Icon": "https://cdn.discordapp.com/avatars/274262209515880448/4c21b040f021d74411e2dde12bad6708.png", "ScoreImage": "images/scores/boddy-hts1.png"
+        },
+        {
+          "Username": "Snivy", "Score": 31939705, "Game": "CH 1.0", "Accuracy": 99.72, "Max Combo": 4432, "Version": "2024",
+          "Icon": "https://cdn.discordapp.com/avatars/655193695263391744/929b3255eaa89da1b5ac4d5ddc0ccd1f.png", "ScoreImage": "images/scores/snivy-hts1.png"
+        },
+        {
+          "Username": "PILE", "Score": 30510465, "Game": "CH 1.0", "Accuracy": 99.32, "Max Combo": 3495, "Version": "2024",
+          "Icon": "https://cdn.discordapp.com/avatars/339528553496444928/9efb9fd8fa8de8103a010b7dcf186970.png", "ScoreImage": "images/scores/boddy-hts1.png"
+        },
+        {
+          "Username": "beud497", "Score": 30407165, "Game": "ScoreSpy", "Accuracy": 99.76, "Max Combo": 6826, "Version": "2023",
+          "Icon": "https://cdn.discordapp.com/avatars/632969182761451522/eba419a26c02e3c93b0b02eda1367dff.png", "ScoreImage": "images/scores/beud-hts1.png"
+        },
+        {
+          "Username": "Advanst", "Score": 30139285, "Game": "ScoreSpy", "Accuracy": 99.57, "Max Combo": 4681, "Version": "2023",
+          "Icon": "https://cdn.discordapp.com/avatars/78678604556271616/02d5334d23b8ac6325eae2d4c484e198.png", "ScoreImage": "images/scores/advanst-hts1.png"
+        },
+        {
+          "Username": "Satan", "Score": 28857135, "Game": "ScoreSpy", "Accuracy": 99.32, "Max Combo": 2670, "Version": "2023",
+          "Icon": "https://cdn.discordapp.com/avatars/186331412641742850/b672f0bd01e0d76b5bb5bd4a3707f5c2.png", "ScoreImage": "images/scores/satan-hts1.png"
+        },
+        {
+          "Username": "PILE", "Score": 27546480, "Game": "ScoreSpy", "Accuracy": 97.93, "Max Combo": 2721, "Version": "2023",
+          "Icon": "https://cdn.discordapp.com/avatars/339528553496444928/9efb9fd8fa8de8103a010b7dcf186970.png", "ScoreImage": "images/scores/pile-hts1.png"
+        },
+        {
+          "Username": "HopH2O", "Score": 24919995, "Game": "ScoreSpy", "Accuracy": 97.52, "Max Combo": 1691, "Version": "2023",
+          "Icon": "https://cdn.discordapp.com/avatars/226154178358149131/ec5251b786e156e6f0be3b053d730277.png", "ScoreImage": "images/scores/hoph2o-hts2.png"
+        },
+        {
+          "Username": "Tomato", "Score": 21007500, "Game": "CH 1.0", "Accuracy": 98.99, "Max Combo": 3877, "Version": "2021",
+          "Icon": "https://cdn.discordapp.com/avatars/268153191739162625/000abf67792a2ec204d20a04a25d4c59.png", "ScoreImage": "images/scores/tomato-hts1.png"
+        },
+        {
+          "Username": "LevyLand", "Score": 20090040, "Game": "ScoreSpy", "Accuracy": 94.29, "Max Combo": 564, "Version": "2023",
+          "Icon": "https://cdn.discordapp.com/avatars/315951037188014082/7369faecccaee968c7870956f1a7f72c.webp?size=128", "ScoreImage": "images/scores/levy-hts1.png"
+        },
+        {
+          "Username": "BirdmanExe", "Score": 14361070, "Game": "RB3", "Accuracy": 99, "Max Combo": 69, "Version": "2023",
+          "Icon": "https://cdn.discordapp.com/avatars/159092179933986816/948ac747c17a3d9f5f354694c3eb4557.webp?size=128", "ScoreImage": "images/scores/beniPoint.png"
+        },
+        {
+          "Username": "HopH2O", "Score": 11468520, "Game": "CH 1.0", "Accuracy": 89.66, "Max Combo": 369, "Version": "2021",
+          "Icon": "https://cdn.discordapp.com/avatars/226154178358149131/ec5251b786e156e6f0be3b053d730277.png", "ScoreImage": "images/scores/beniPoint.png"
+        }
+      ]
+    },
+    {
+      "id": "neck-deep", "name": "Neck Deep", "logo": "images/logos/neck-deep.webp",
+      "entries": [
+        {
+          "Username": "PILE", "Score": 24363330, "Game": "CH 1.0", "Accuracy": 99.81, "Max Combo": 6709, "Version": "2024",
+          "Icon": "https://cdn.discordapp.com/avatars/339528553496444928/9efb9fd8fa8de8103a010b7dcf186970.png", "ScoreImage": "images/scores/pile-nd2.png"
+        },
+        {
+          "Username": "PILE", "Score": 18613170, "Game": "ScoreSpy", "Accuracy": 99.45, "Max Combo": 2295, "Version": "2020",
+          "Icon": "https://cdn.discordapp.com/avatars/339528553496444928/9efb9fd8fa8de8103a010b7dcf186970.png", "ScoreImage": "images/scores/pile-nd1.png"
+        },
+        {
+          "Username": "TCMusic", "Score": 17250285, "Game": "Scorespy", "Accuracy": 98.65, "Max Combo": 1377, "Version": "2020",
+          "Icon": "https://cdn.discordapp.com/avatars/197800883742834688/35db8ad4a7301b0d17ba25354b69e177.webp?size=128", "ScoreImage": "images/scores/tcmusic-nd1.png"
+        },
+        {
+          "Username": "HopH2O", "Score": 12996950, "Game": "Scorespy", "Accuracy": 96.91, "Max Combo": 365, "Version": "2020",
+          "Icon": "https://cdn.discordapp.com/avatars/226154178358149131/ec5251b786e156e6f0be3b053d730277.png", "ScoreImage": "images/scores/hoph2o-nd1.png"
+        }
+      ]
+    },
+    {
+      "id": "rise-against", "name": "Rise Against", "logo": "images/logos/rise-against.webp",
+      "entries": [
+        {
+          "Username": "PILE", "Score": 49545405, "Game": "ScoreSpy", "Accuracy": 99.60, "Max Combo": 6196, "Version": "2022",
+          "Icon": "https://cdn.discordapp.com/avatars/339528553496444928/9efb9fd8fa8de8103a010b7dcf186970.png", "ScoreImage": "images/scores/pile-ra1.png"
+        }
+      ]
+    },
+    {
+      "id": "blink-182", "name": "blink-182", "logo": "images/logos/blink-182.webp"
+    },
+    {
+      "id": "area-11", "name": "Area 11", "logo": "images/logos/area-11.webp"
+    },
+    {
+      "id": "nova-charisma", "name": "Nova Charisma", "logo": "images/logos/nova-charisma.webp"
+    }
+  ]
+}
