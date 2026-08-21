@@ -182,7 +182,7 @@
 
             // Filter out artists with less than 10 songs
             const filteredArtistCounts = Object.entries(artistCounts)
-                .filter(([artist, count]) => count >= 10); // Only keep artists with more than 1 song
+                .filter(([artist, count]) => count >= 10); // Only keep artists with more than 10 songs
 
             // Separate the filtered data into labels and values
             let artistLabels = filteredArtistCounts.map(([artist]) => artist);
@@ -248,7 +248,7 @@
                             }
                         },
                         x: {
-                            max: 140
+                            max: 160
                         }
                     }
                 }
@@ -262,9 +262,9 @@
                 charterCounts[charter] = (charterCounts[charter] || 0) + 1;
             });
 
-            // Filter out artists with less than 15 songs
+            // Filter out charters with less than 15 songs
             const filteredCharterCounts = Object.entries(charterCounts)
-                .filter(([charter, count]) => count >= 15); // Only keep artists with more than 1 song
+                .filter(([charter, count]) => count >= 15); // Only keep charters with more than 15 songs
 
             // Separate the filtered data into labels and values
             let charterLabels = filteredCharterCounts.map(([charter]) => charter);
@@ -330,7 +330,7 @@
                             }
                         },
                         x: {
-                            max: 1000
+                            max: 1400
                         }
                     }
                 }
